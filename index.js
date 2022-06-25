@@ -1,4 +1,7 @@
 console.log('from redux');
+
+const redux = require('redux')
+const createStore = redux.createStore
 const CAKE_ORDERED ='CAKE_ORDERED';
 const orderCake=()=>{
     return {
@@ -6,3 +9,9 @@ const orderCake=()=>{
         quantity:1,
     }
 }
+
+const initialState ={
+    numOfCakes:10,
+    // anotherProperty:0,
+}
+
