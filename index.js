@@ -1,5 +1,6 @@
 const redux = require('redux')
 const createStore = redux.createStore
+const bindActionCreators = redux.bindActionCreators;
 
 const initialState = {
     numOfCakes: 10,
@@ -11,14 +12,14 @@ const CAKE_RESTOCKED = 'CAKE_RESTOCKED'
 const orderCake = () => {
     return {
         type: CAKE_ORDERED,
-        quantity: 1,
+        payload: 1,
     }
 }
 
 const restockedCake = (qty = 1) => {
     return {
         type: CAKE_RESTOCKED,
-        quantity: qty,
+        payload: qty,
     }
 }
 
@@ -36,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case CAKE_RESTOCKED:
             return {
                 ...state,
-                numOfCakes: state.numOfCakes + action.quantity,
+                numOfCakes: state.numOfCakes + action.payload,
             }
         default:
             return state;
@@ -49,11 +50,20 @@ console.log('Initial State:', store.getState());
 
 const unsubscribe = store.subscribe(() => console.log('Updated State :', store.getState()))
 
-store.dispatch(orderCake())
-store.dispatch(orderCake())
-store.dispatch(orderCake())
-store.dispatch(orderCake())
-store.dispatch(restockedCake(4))
+// store.dispatch(orderCake())
+// store.dispatch(orderCake())
+// store.dispatch(orderCake())
+// store.dispatch(orderCake())
+// store.dispatch(restockedCake(4))
+
+const actions =bindActionCreators({orderCake,restockedCake},store.dispatch)
+
+actions.orderCake()
+actions.orderCake()
+actions.orderCake()
+actions.orderCake()
+actions.orderCake()
+actions.restockedCake(5)
 unsubscribe();
 
 
